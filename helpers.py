@@ -26,26 +26,30 @@ def goToMenu():
 def getValidIdentifier(list, fieldIndex, fieldName):
     value = getValidIntegerValue(f'Please input {fieldName}: ', fieldName)
     if value == 'no': return 'no'
+    
     for item in list:
         if value == item[fieldIndex]:
             return value
         else:
             continue
+
     print(f"{fieldName.capitalize()}: '{value}' does not exists in the list. Please correct value for {fieldName}.")
     return getValidIdentifier(list, fieldIndex, fieldName)
 
 def getValidAndUniqueValue(list, fieldIndex, fieldName):
     value = getValidIntegerValue(f'Please input {fieldName}: ', fieldName)
-    if value == 'no':
-        return 'no'
+    if value == 'no': return 'no'
+
     for item in list:
         if value == item[fieldIndex]:
             print(f"{fieldName.capitalize()}: '{value}' already exists in the list. Please provide unique value for {fieldName}.")
             getValidAndUniqueValue(list, fieldIndex, fieldName)
+
     return value
 
 def getValidNameFieldValue(field):
     name = input(f'Please input {field.lower()} name: ').strip()
+    
     if name and not name.isnumeric():
         return name.capitalize()
     else:

@@ -20,8 +20,10 @@ def menu():
 
 def main():
     print("\nWelcome to the 'Employee Discount Calculator' program!")
+
     currentItems = getInitialItems()
     currentEmployees = getInitialEmployees()
+    
     while True:
         choice = menu()
         if choice == '1':
@@ -41,6 +43,5 @@ def main():
             break
         else:
             print('Invalid option! Please select again.')
-
 
 main()
