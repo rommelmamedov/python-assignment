@@ -1,6 +1,6 @@
 
-from helpers import confirm, getItemFromListByUniqueIdentifier, getValidIdentifier
 from getAllEmployeesSummary import getAllEmployeesSummary
+from helpers import confirm, getItemFromListByUniqueIdentifier, getValidIdentifier
 
 
 def updateEmployeeList(employeeDiscountNumber, currentEmployees, totalPurchased, totalDiscounts):
@@ -31,10 +31,8 @@ def calculateCost(employee, item):
     else:
         totalPercentage = totalYearBasedPercentage
 
-    if employeeType == 'manager':
-        totalPercentage += 10
-    elif employeeType == 'hourly':
-        totalPercentage += 2
+    if employeeType == 'manager': totalPercentage += 10
+    elif employeeType == 'hourly': totalPercentage += 2
 
     itemCost = item[2]
     totalPurchased += itemCost - (itemCost * totalPercentage / 100)
@@ -54,12 +52,10 @@ def makePurchase(currentItems, currentEmployees):
     print('— — — — — — Items Summary — — — — — —\n')
     
     employeeDiscountNumber = getValidIdentifier(currentEmployees, 6, 'employee discount number')
-    if employeeDiscountNumber == 'no':
-        return
+    if employeeDiscountNumber == 'no': return
     
     itemNumber = getValidIdentifier(currentItems, 0, 'item number')
-    if itemNumber == 'no':
-        return
+    if itemNumber == 'no': return
     
     shouldConfirmPurchase = confirm('\nDo you want to confirm purchase? (Yes/No): ')
     if shouldConfirmPurchase:

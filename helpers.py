@@ -1,8 +1,7 @@
 # General Helper Functions.
 def getValidIntegerValue(prompt, fieldName):
     inputValue = input(prompt).strip()
-    if inputValue == 'no':
-        return 'no'
+    if inputValue == 'no': return 'no'
     # Condition to checks if user entered numberic value.
     if inputValue.isnumeric():
         return int(inputValue)
@@ -14,12 +13,9 @@ def getValidIntegerValue(prompt, fieldName):
 def confirm(message):
     choice = input(message).strip().lower()
     while True:
-        if choice in ['yes', 'y']:
-            return True
-        elif choice in ['no', 'n']:
-            return False
-        else:
-            print("Please respond with 'yes' or 'no'")
+        if choice in ['yes', 'y']: return True
+        elif choice in ['no', 'n']: return False
+        else: print("Please respond with 'yes' or 'no'")
 
 
 def goToMenu():
@@ -29,8 +25,7 @@ def goToMenu():
 
 def getValidIdentifier(list, fieldIndex, fieldName):
     value = getValidIntegerValue(f'Please input {fieldName}: ', fieldName)
-    if value == 'no':
-        return 'no'
+    if value == 'no': return 'no'
     for item in list:
         if value == item[fieldIndex]:
             return value
