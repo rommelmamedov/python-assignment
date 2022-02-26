@@ -26,6 +26,19 @@ def getValidIntegerValue(prompt, fieldName):
         printErrorMessage(f"Please provide a valid interger value for {fieldName}.")
         return getValidIntegerValue(prompt, fieldName)
 
+def getValidNumericValue(prompt, fieldName):
+    inputValue = input(prompt).strip()
+    if inputValue == 'no': return 'no'
+
+    try:
+        float(inputValue)
+    except ValueError:
+        printErrorMessage(f"Please provide a valid numeric value for {fieldName}.")
+        return getValidNumericValue(prompt, fieldName)
+    else: 
+        if float(inputValue).is_integer(): return int(float(inputValue))
+        else: return float(inputValue)
+
 # Reusable confirmation function
 def confirm(message):
     choice = input(message).strip().lower()
@@ -65,7 +78,7 @@ def getValidAndUniqueValue(list, fieldIndex, fieldName):
 
 def getValidNameFieldValue(field):
     name = input(f'Please input {field.lower()} name: ').strip()
-    
+    # Check if name is not empty or numeric value
     if name and not name.isnumeric():
         return name.title()
     else:

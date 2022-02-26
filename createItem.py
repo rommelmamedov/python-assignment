@@ -1,4 +1,4 @@
-from helpers import confirm, getValidNameFieldValue, getValidIntegerValue, getValidAndUniqueValue, printSuccessMessage, printInfoMessage
+from helpers import confirm, getValidNameFieldValue, getValidNumericValue, getValidAndUniqueValue, printSuccessMessage, printInfoMessage
 
 def createItem(currentItems):
     printInfoMessage('\nItem creation page:\n')
@@ -7,8 +7,8 @@ def createItem(currentItems):
   
     itemName = getValidNameFieldValue('Item')
     if itemName == 'no': return
-    # TODO: Input cost float
-    itemCost = getValidIntegerValue('Please input item cost: ', 'item cost')
+
+    itemCost = getValidNumericValue('Please input item cost: ', 'item cost')
     if itemCost == 'no': return
   
     currentItems.append([itemNumber, itemName, itemCost])
