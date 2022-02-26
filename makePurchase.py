@@ -1,7 +1,5 @@
-
 from getAllEmployeesSummary import getAllEmployeesSummary
-from helpers import confirm, getItemFromListByUniqueIdentifier, getValidIdentifier
-
+from helpers import confirm, getItemFromListByUniqueIdentifier, getValidIdentifier, printInfoMessage, printSuccessMessage, printWarningMessage
 
 def updateEmployeeList(employeeDiscountNumber, currentEmployees, totalPurchased, totalDiscounts):
     updatedEmployees = []
@@ -22,7 +20,7 @@ def calculateCost(employee, item):
     employeeType = employee[2]
     yearsWorked = employee[3]
     totalPurchased = employee[4]
-    totalDiscounts = employee[5] + 120
+    totalDiscounts = employee[5]
 
     totalYearBasedPercentage = yearsWorked * 2
     totalPercentage = 0
@@ -37,20 +35,17 @@ def calculateCost(employee, item):
     itemCost = item[2]
     totalPurchased += itemCost - (itemCost * totalPercentage / 100)
     totalDiscounts += itemCost * totalPercentage / 100
-    print(totalPurchased, 'totalPurchased')
-    print(totalDiscounts, 'totalDiscounts')
-    print(totalPercentage, 'totalPercentage')
     return totalPurchased, totalDiscounts, maxTotalDiscount
 
 
 def makePurchase(currentItems, currentEmployees):
     updatedEmployees = currentEmployees
     
-    print('\n— — — — — — Items Summary — — — — — —')
+    printInfoMessage('\n— — — — — — Items Summary — — — — — —')
     print('\nItem Number, Item Name, Item Cost\n')
     for itemNumber, itemName, itemCost in currentItems:
         print(f'{itemNumber}, {itemName}, ${itemCost:.2f}\n')
-    print('— — — — — — Items Summary — — — — — —\n')
+    printInfoMessage('— — — — — — Items Summary — — — — — —\n')
     
     employeeDiscountNumber = getValidIdentifier(currentEmployees, 6, 'employee discount number')
     if employeeDiscountNumber == 'no': return
@@ -58,17 +53,20 @@ def makePurchase(currentItems, currentEmployees):
     itemNumber = getValidIdentifier(currentItems, 0, 'item number')
     if itemNumber == 'no': return
     
-    if confirm('\nDo you want to confirm purchase? (Yes/No): '):
+    if confirm('\nDo you want to confirm purchase? [Yes/No or Y/N]: '):
         employee = getItemFromListByUniqueIdentifier(currentEmployees, employeeDiscountNumber, 6)
         item = getItemFromListByUniqueIdentifier(currentItems, itemNumber, 0)
         totalPurchased, totalDiscounts, maxTotalDiscount = calculateCost(employee, item)
         
         if totalDiscounts > maxTotalDiscount:
-            print(f"\nSorry employee with discount number: '{employeeDiscountNumber}' is not allowed to make this purchase. No discount allowed once you have received $200 discount. Current calculated discount amount is: '{totalDiscounts}'.")
+            printWarningMessage(f"\nSorry employee with discount number: '{employeeDiscountNumber}' is not allowed to make this purchase. No discount allowed once you have received $200 discount. After this purchase calculated discount amount will be: ${totalDiscounts:.2f}.")
         else:
             updatedEmployees = updateEmployeeList(employeeDiscountNumber, currentEmployees, totalPurchased, totalDiscounts)
-    
-    if confirm('\nDo you want to make new purchase? (Yes/No): '):
+            printSuccessMessage(f"\nNew item purchase by employee with discount number: '{employeeDiscountNumber}' for the item with number: '{itemNumber}' completed successfully.")
+            printInfoMessage(f"\nTotal purchase amount is: ${totalPurchased:.2f}.")
+            printInfoMessage(f"\nTotal discount amount is: ${totalDiscounts:.2f}.")
+
+    if confirm('\nDo you want to make new purchase? [Yes/No or Y/N]: '):
         makePurchase(currentItems, currentEmployees)
     else: 
         getAllEmployeesSummary(updatedEmployees)
